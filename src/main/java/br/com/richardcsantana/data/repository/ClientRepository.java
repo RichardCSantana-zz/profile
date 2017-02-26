@@ -1,10 +1,10 @@
-package br.com.richardcsantana.repository;
+package br.com.richardcsantana.data.repository;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.richardcsantana.model.Client;
+import br.com.richardcsantana.data.model.Client;
 
 /**
  * @author richard.santana

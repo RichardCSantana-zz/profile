@@ -13,8 +13,8 @@ import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.security.oauth2.provider.NoSuchClientException;
 import org.springframework.stereotype.Service;
 
-import br.com.richardcsantana.model.Client;
-import br.com.richardcsantana.repository.ClientRepository;
+import br.com.richardcsantana.data.model.Client;
+import br.com.richardcsantana.data.repository.ClientRepository;
 import br.com.richardcsantana.service.CustomClientDetailsService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +42,7 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
 	@Override
 	public void addClientDetails(final ClientDetails clientDetails) throws ClientAlreadyExistsException {
 		final Client toSave = new Client();
-		BeanUtils.copyProperties(toSave, clientDetails);
+		BeanUtils.copyProperties(clientDetails, toSave);
 		toSave.setClientSecret(encode(clientDetails.getClientSecret()));
 		try {
 			this.clientRepository.save((Client) clientDetails);
@@ -60,7 +60,7 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
 	public void updateClientDetails(final ClientDetails clientDetails) throws NoSuchClientException {
 		Optional.ofNullable(this.clientRepository.findOne(clientDetails.getClientId())).ifPresent(
 				toSave -> {
-					BeanUtils.copyProperties(toSave, clientDetails);
+					BeanUtils.copyProperties(clientDetails, toSave);
 					this.clientRepository.save((Client) clientDetails);
 				}
 		);

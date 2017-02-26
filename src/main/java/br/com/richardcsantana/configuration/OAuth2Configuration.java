@@ -1,8 +1,8 @@
 package br.com.richardcsantana.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
+import br.com.richardcsantana.configuration.property.JwtProperty;
 import br.com.richardcsantana.service.CustomClientDetailsService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -31,16 +32,17 @@ import lombok.RequiredArgsConstructor;
 public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 
 	@Getter
-	private final PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Getter
 	private final AuthenticationManager authenticationManager;
 
-	@Getter
 	private final CustomClientDetailsService clientDetailsService;
 
-	@Getter
 	private final UserDetailsService userDetailsService;
+
+	private final JwtProperty jwtProperty;
 
 	@Bean
 	public TokenStore getTokenStore() {
@@ -51,8 +53,8 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 	public JwtAccessTokenConverter getAccessTokenConverter() {
 		final JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
 		final KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(
-				new ClassPathResource(""), "".toCharArray()); //TODO use configurationProperties
-		jwtAccessTokenConverter.setKeyPair(keyStoreKeyFactory.getKeyPair("")); //TODO use configuration properties
+				this.jwtProperty.getPath(), this.jwtProperty.getKeyPass().toCharArray());
+		jwtAccessTokenConverter.setKeyPair(keyStoreKeyFactory.getKeyPair(this.jwtProperty.getAlias(), this.jwtProperty.getKeyPass().toCharArray()));
 		return jwtAccessTokenConverter;
 	}
 
@@ -64,12 +66,12 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 	@Override
 	public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
 		this.clientDetailsService.setPasswordEncoder(getPasswordEncoder());
-		clients.withClientDetails(getClientDetailsService());
+		clients.withClientDetails(this.clientDetailsService);
 	}
 
 	@Override
 	public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.tokenStore(getTokenStore()).authenticationManager(getAuthenticationManager())
-				.userDetailsService(getUserDetailsService()).accessTokenConverter(getAccessTokenConverter());
+				.userDetailsService(this.userDetailsService).accessTokenConverter(getAccessTokenConverter());
 	}
 }
