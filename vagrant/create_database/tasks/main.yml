@@ -1,0 +1,24 @@
+---
+# tasks file for create_database
+  - name: create database
+    become: yes
+    become_user: postgres
+    postgresql_db:
+      name: oauth
+  - name: create user
+    become: yes
+    become_user: postgres
+    postgresql_user:
+      db: oauth
+      name: application
+      password: mysecretpassword
+  - name: copy script file
+    become: yes
+    become_user: postgres
+    copy:
+      src: init.sql
+      dest: /tmp/init.sql
+  - name: create and populate database
+    become: yes
+    become_user: postgres
+    shell: psql oauth < /tmp/init.sql
