@@ -14,3 +14,5 @@ spring:
     password: mysecretpassword
     platform: postgres
     driverClassName: org.postgresql.Driver
+logging:
+  file: log/application.log

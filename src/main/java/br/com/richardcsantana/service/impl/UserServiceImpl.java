@@ -3,6 +3,8 @@ package br.com.richardcsantana.service.impl;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.richardcsantana.data.model.AppUser;
 import br.com.richardcsantana.data.repository.UserRepository;
+import br.com.richardcsantana.exception.ResourceNotFoundException;
 import br.com.richardcsantana.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +29,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	private final PasswordEncoder passwordEncoder;
 
 	@Override
+	@Cacheable(value = "user", key = "#username")
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		User user = null;
 		final Optional<AppUser> result = this.userRepository.findByUsernameAndEnabledTrue(username);
@@ -38,13 +42,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
+	@CacheEvict(value = "user", key = "#appUser.username")
 	public AppUser save(final AppUser appUser) {
 		appUser.setPassword(encode(appUser.getPassword()));
 		return this.userRepository.save(appUser);
 	}
 
 	@Override
-	public AppUser update(final String username, final AppUser appUser) {
+	@CacheEvict(value = "user", key = "#username")
+	public AppUser update(final String username, final AppUser appUser) throws ResourceNotFoundException {
 		final Optional<AppUser> result = this.userRepository.findByUsernameAndEnabledTrue(username);
 		if (result.isPresent()) {
 			AppUser update = result.get();
@@ -52,7 +58,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			update = this.userRepository.save(update);
 			return update;
 		}
-		return null; //TODO tratar exceção
+		throw new ResourceNotFoundException("The user %s is not found", username);
 	}
 
 	private String encode(final String password) {

@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientAlreadyExistsException;
@@ -34,6 +36,7 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
 	private final ClientRepository clientRepository;
 
 	@Override
+	@Cacheable(value = "client", key = "#clientId")
 	public ClientDetails loadClientByClientId(final String clientId) throws ClientRegistrationException {
 		final Optional<Client> details = Optional.ofNullable(this.clientRepository.findOne(clientId));
 		return details.orElseThrow(() -> new NoSuchClientException("No client with requested id: " + clientId));
@@ -57,6 +60,7 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
 	}
 
 	@Override
+	@CacheEvict(value = "client", key = "#clientDetails.clientId")
 	public void updateClientDetails(final ClientDetails clientDetails) throws NoSuchClientException {
 		Optional.ofNullable(this.clientRepository.findOne(clientDetails.getClientId())).ifPresent(
 				toSave -> {
@@ -67,6 +71,7 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
 	}
 
 	@Override
+	@CacheEvict(value = "client", key = "#clientId")
 	public void updateClientSecret(final String clientId, final String secret) throws NoSuchClientException {
 		Optional.ofNullable(this.clientRepository.findOne(clientId)).ifPresent(
 				toSave -> {
@@ -77,6 +82,7 @@ public class CustomClientDetailsServiceImpl implements CustomClientDetailsServic
 	}
 
 	@Override
+	@CacheEvict(value = "client", key = "#clientId")
 	public void removeClientDetails(final String clientId) throws NoSuchClientException {
 		this.clientRepository.delete(clientId);
 	}
