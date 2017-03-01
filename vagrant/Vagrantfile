@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
     ansible.groups = {
       "cache" => ["node-2", "node-3", "node-4"],
       "database"  => ["node-1"],
-      "cache_starter" => ["node-4"]
+      "cluster_starter" => ["node-4"]
     }
   end
 

@@ -1292,7 +1292,6 @@ class RedisTrib
         xputs ">>> Performing hash slots allocation on #{@nodes.length} nodes..."
         alloc_slots
         show_nodes
-        yes_or_die "Can I set the above configuration?"
         flush_nodes_config
         xputs ">>> Nodes configuration updated"
         xputs ">>> Assign a different config epoch to each node"
@@ -1445,7 +1444,7 @@ class RedisTrib
         xputs ">>> Importing data from #{source_addr} to cluster #{argv[1]}"
         use_copy = opt['copy']
         use_replace = opt['replace']
-        
+
         # Check the existing cluster.
         load_cluster_info_from_node(argv[0])
         check_cluster
