@@ -3,7 +3,7 @@
 - name: Start a container
   docker_container:
     name: profile-application
-    image: richardcssantana/profile-application
+    image: richardcsantana/profile-application
     state: started
     ports:
      - "8080:8080"
