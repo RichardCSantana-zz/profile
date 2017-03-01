@@ -1,4 +1,4 @@
-package br.com.richardcsantana.configuration;
+package br.com.richardcsantana.configuration.property;
 
 import java.util.List;
 

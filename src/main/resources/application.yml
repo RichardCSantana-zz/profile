@@ -17,3 +17,5 @@ spring:
     driverClassName: org.postgresql.Driver
 logging:
   file: log/application.log
+server:
+  port: 8081

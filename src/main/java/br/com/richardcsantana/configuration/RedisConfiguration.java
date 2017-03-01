@@ -7,6 +7,8 @@ import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
+import br.com.richardcsantana.configuration.property.ClusterConfigurationProperties;
+
 /**
  * @author richard.santana
  */

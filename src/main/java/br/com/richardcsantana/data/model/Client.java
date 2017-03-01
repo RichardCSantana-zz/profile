@@ -81,6 +81,6 @@ public class Client implements ClientDetails, Serializable {
 
 	@Override
 	public boolean isAutoApprove(final String scope) {
-		return true; //TODO validar fluxo autoapprove
+		return true;
 	}
 }

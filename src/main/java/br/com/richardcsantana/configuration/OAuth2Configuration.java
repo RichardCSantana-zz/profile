@@ -54,7 +54,8 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 		final JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
 		final KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(
 				this.jwtProperty.getPath(), this.jwtProperty.getKeyPass().toCharArray());
-		jwtAccessTokenConverter.setKeyPair(keyStoreKeyFactory.getKeyPair(this.jwtProperty.getAlias(), this.jwtProperty.getKeyPass().toCharArray()));
+		jwtAccessTokenConverter.setKeyPair(keyStoreKeyFactory.getKeyPair(this.jwtProperty.getAlias(),
+				this.jwtProperty.getKeyPass().toCharArray()));
 		return jwtAccessTokenConverter;
 	}
 

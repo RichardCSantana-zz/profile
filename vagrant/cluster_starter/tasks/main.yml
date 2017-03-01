@@ -1,0 +1,13 @@
+---
+# tasks file for cluster_starter
+- name: install redis gem
+  gem:
+    name: redis
+    state: latest
+- name: copy script file
+  copy:
+    src: redis-trib.rb
+    dest: ~/redis-trib.rb
+    mode: 0751
+- name: activate cluster
+  shell: ./redis-trib.rb create --replicas 0 192.168.77.22:6379 192.168.77.23:6379 192.168.77.24:6379

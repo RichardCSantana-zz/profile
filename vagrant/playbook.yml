@@ -6,3 +6,6 @@
 - hosts: cache
   roles:
      - redis-cluster
+- hosts: cluster_starter
+  roles:
+     - cluster_starter
