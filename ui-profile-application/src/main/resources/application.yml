@@ -1,6 +1,6 @@
 oauth.connection:
-  authorization_url: http://localhost:8081/oauth/authorize
-  token_url: http://localhost:8081/oauth/token
+  authorization_url: http://192.168.77.25:8081/oauth/authorize
+  token_url: http://192.168.77.25:8081/oauth/token
   client_id: newClient
   client_secret: secret
-  redirect_url: http://localhost:8080/login
+  redirect_url: http://192.168.77.25:8080/login
