@@ -9,10 +9,13 @@ import javax.persistence.Converter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author richard.santana
  */
 @Converter
+@Slf4j
 public class MapConverter implements AttributeConverter<Map<String, Object>, String> {
 
 	private final static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -23,7 +26,7 @@ public class MapConverter implements AttributeConverter<Map<String, Object>, Str
 		try {
 			result = OBJECT_MAPPER.writeValueAsString(stringObjectMap);
 		} catch (final JsonProcessingException e) {
-			e.printStackTrace(); //TODO tratar exceção
+			log.error(e.getMessage(), e);
 		}
 		return result;
 	}

@@ -1,0 +1,9 @@
+---
+# tasks file for ui-application
+- name: Start a container
+  docker_container:
+    name: ui-profile-application
+    image: richardcssantana/ui-profile-application
+    state: started
+    ports:
+     - "8080:8080"

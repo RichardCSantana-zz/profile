@@ -17,12 +17,12 @@ public class CacheController {
 
 	private final CacheService cacheService;
 
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	@RequestMapping(value = "/load/users", method = RequestMethod.GET)
 	public void loadUsers() {
 		this.cacheService.loadUserCache();
 	}
 
-	@RequestMapping(value = "/clients", method = RequestMethod.GET)
+	@RequestMapping(value = "/load/clients", method = RequestMethod.GET)
 	public void loadClients() {
 		this.cacheService.loadClientCache();
 	}

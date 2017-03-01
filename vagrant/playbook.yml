@@ -9,3 +9,11 @@
 - hosts: cluster_starter
   roles:
      - cluster_starter
+- hosts: security
+  roles:
+    - angstwad.docker_ubuntu
+    - security-application
+- hosts: ui
+  roles:
+    - angstwad.docker_ubuntu
+    - security-application
