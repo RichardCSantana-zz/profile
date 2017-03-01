@@ -4,6 +4,7 @@ node-1 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 ansible_ssh_user='vagran
 node-2 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2200 ansible_ssh_user='vagrant' ansible_ssh_private_key_file='/Users/richard.santana/.vagrant.d/insecure_private_key'
 node-3 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2201 ansible_ssh_user='vagrant' ansible_ssh_private_key_file='/Users/richard.santana/.vagrant.d/insecure_private_key'
 node-4 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2202 ansible_ssh_user='vagrant' ansible_ssh_private_key_file='/Users/richard.santana/.vagrant.d/insecure_private_key'
+node-5 ansible_ssh_host=127.0.0.1 ansible_ssh_port=2203 ansible_ssh_user='vagrant' ansible_ssh_private_key_file='/Users/richard.santana/.vagrant.d/insecure_private_key'
 
 [cache]
 node-2
@@ -15,3 +16,8 @@ node-1
 
 [cluster_starter]
 node-4
+
+[security]
+node-5
+
+[ui]

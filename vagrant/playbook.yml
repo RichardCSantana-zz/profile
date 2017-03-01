@@ -10,10 +10,14 @@
   roles:
      - cluster_starter
 - hosts: security
+  become: yes
+  become_user: root
   roles:
     - angstwad.docker_ubuntu
     - security-application
 - hosts: ui
+  become: yes
+  become_user: root
   roles:
     - angstwad.docker_ubuntu
     - security-application
