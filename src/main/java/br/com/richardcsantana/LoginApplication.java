@@ -5,10 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 
+import br.com.richardcsantana.configuration.ClusterConfigurationProperties;
 import br.com.richardcsantana.configuration.property.JwtProperty;
 
 @SpringBootApplication
-@EnableConfigurationProperties(value = {JwtProperty.class})
+@EnableConfigurationProperties(value = {JwtProperty.class, ClusterConfigurationProperties.class})
 @EnableCaching
 public class LoginApplication {
 

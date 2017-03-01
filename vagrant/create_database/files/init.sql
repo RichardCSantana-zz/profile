@@ -27,4 +27,7 @@ insert into client_table (client_id,client_secret,resource_ids,secret_required,s
  values ('newClient','$2a$10$dVQLmf9NPpBn4FZRtZdC7eGYpJk93rNEg8Z4kdarvHDdM3XszlE6m',null,true,true,'read','client_credentials,password,refresh_token,authorization_code',null,'ROLE_ADMIN',300,600,'{}');
 
 insert into user_table (id, authorities, email, enabled, password, username)
-values (1,'ROLE_ADMIN','teste@teste.com.br',true,'$2a$10$8AAAcIPOMzblBW3OlVEaFuBYlj3wPSRCN8R2O3nTaO9XdKRJkm17i','user')
+values (1,'ROLE_ADMIN','teste@teste.com.br',true,'$2a$10$8AAAcIPOMzblBW3OlVEaFuBYlj3wPSRCN8R2O3nTaO9XdKRJkm17i','user');
+
+alter table client_table owner to application;
+alter table user_table owner to application;

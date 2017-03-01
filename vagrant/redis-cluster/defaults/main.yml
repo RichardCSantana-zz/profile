@@ -1,0 +1,3 @@
+---
+# defaults file for redis-cluster
+  redis_port: 6379

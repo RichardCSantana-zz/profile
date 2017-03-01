@@ -4,12 +4,13 @@ jwt:
   store-pass: mypass
   alias: mytest
 spring:
+  redis.cluster.nodes: 192.168.77.22:6379, 192.168.77.23:6379, 192.168.77.24:6379
   jpa:
     database: postgresql
     hibernate:
       ddl-auto: validate
   datasource:
-    url: jdbc:postgresql://192.168.77.21:5432/postgres
+    url: jdbc:postgresql://192.168.77.21:5432/oauth
     username: application
     password: mysecretpassword
     platform: postgres
