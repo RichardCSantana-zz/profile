@@ -1,0 +1,48 @@
+---
+# tasks file for redis-cluster
+  - name: get keys
+    become: yes
+    become_user: root
+    apt_key:
+      url: http://www.dotdeb.org/dotdeb.gpg
+      state: present
+  - name: create apt repository
+    become: yes
+    become_user: root
+    apt_repository:
+      repo: deb http://packages.dotdeb.org squeeze all
+      state: present
+  - name: install build-essential
+    become: yes
+    become_user: root
+    apt:
+      name: build-essential
+      state: latest
+      update_cache: yes
+  - name: install tcl8.5
+    become: yes
+    become_user: root
+    apt:
+      name: tcl8.5
+      state: latest
+  - name: install redis-server
+    become: yes
+    become_user: root
+    apt:
+      name: redis-server
+      state: latest
+  - name: create conf file
+    become: yes
+    become_user: root
+    template:
+      src: redis.conf.j2
+      dest: /etc/redis/redis.conf
+      owner: redis
+      group: redis
+      mode: 0644
+  - name: restart redis
+    become: yes
+    become_user: root
+    service:
+      name: redis-server
+      state: restarted
