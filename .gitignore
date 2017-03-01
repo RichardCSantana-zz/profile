@@ -25,3 +25,5 @@ nbdist/
 
 log/*
 *.retry
+
+*.DS_Store
