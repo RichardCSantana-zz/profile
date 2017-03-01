@@ -15,7 +15,5 @@ spring:
     password: mysecretpassword
     platform: postgres
     driverClassName: org.postgresql.Driver
-logging:
-  file: log/application.log
 server:
   port: 8081
